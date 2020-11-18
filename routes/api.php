@@ -20,3 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('articles', ArticleController::class);
+
+Route::fallback(function () {
+    return response()->json(['error' => 'Not Found!'], 404);
+});
