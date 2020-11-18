@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Article;
+use App\Http\Resources\CommentResource;
+use App\Http\Resources\CommentCollection;
 use Illuminate\Http\Request;
+use Validator;
 
 class CommentController extends Controller
 {
@@ -12,19 +16,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Article $article)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new CommentCollection($article->comments->all());
     }
 
     /**
@@ -33,9 +27,20 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Article $article, Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'author' => 'required|string',
+            'text'   => 'required|string',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors()->toArray(), 422);
+        }
+
+        $comment = $article->comments()->create($validator->validate());
+
+        return new CommentResource($comment);
     }
 
     /**
@@ -44,32 +49,29 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Article $article, int $id)
     {
-        //
+        $comment = $article->comments()->findOrFail($id);
+
+        return new CommentResource($comment);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, Article $article, int $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'author' => 'sometimes|string',
+            'text'   => 'sometimes|string',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors()->toArray(), 422);
+        }
+
+        $comment = $article->comments()->findOrFail($id);
+        $comment->update($validator->validate());
+
+        return new CommentResource($comment);
     }
 
     /**
@@ -78,8 +80,11 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Article $article, $id)
     {
-        //
+        $comment = $article->comments()->findOrFail($id);
+        $comment->delete();
+
+        return response(['success' => true]);
     }
 }
