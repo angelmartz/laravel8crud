@@ -49,15 +49,13 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article, int $id)
+    public function show(Article $article, Comment $comment)
     {
-        $comment = $article->comments()->findOrFail($id);
-
         return new CommentResource($comment);
     }
 
 
-    public function update(Request $request, Article $article, int $id)
+    public function update(Request $request, Article $article, Comment  $comment)
     {
         $validator = Validator::make($request->all(), [
             'author' => 'sometimes|string',
@@ -68,7 +66,6 @@ class CommentController extends Controller
             return response()->json($validator->errors()->toArray(), 422);
         }
 
-        $comment = $article->comments()->findOrFail($id);
         $comment->update($validator->validate());
 
         return new CommentResource($comment);
@@ -80,9 +77,8 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article, $id)
+    public function destroy(Article $article, Comment $comment)
     {
-        $comment = $article->comments()->findOrFail($id);
         $comment->delete();
 
         return response(['success' => true]);
