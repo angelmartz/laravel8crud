@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Http\Resources\ArticleResource;
+use App\Http\Resources\ArticleCollection;
 use Validator;
 
 class ArticleController extends Controller
@@ -15,7 +17,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::all();
+        return new ArticleCollection(Article::all());
     }
 
     /**
@@ -38,7 +40,7 @@ class ArticleController extends Controller
 
         $article = Article::create($validator->validate());
 
-        return $article;
+        return new ArticleResource($article);
     }
 
     /**
@@ -49,7 +51,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return $article;
+        return new ArticleResource($article);
     }
 
     /**
@@ -73,7 +75,7 @@ class ArticleController extends Controller
 
         $article->update($validator->validate());
 
-        return $article;
+        return new ArticleResource($article);
 
     }
 
