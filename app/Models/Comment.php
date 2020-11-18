@@ -13,4 +13,9 @@ class Comment extends Model
         'author',
         'text'
     ];
+
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
 }
