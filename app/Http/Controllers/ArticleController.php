@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Validator;
 
 class ArticleController extends Controller
 {
@@ -18,16 +19,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +26,19 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'author' => 'required|string',
+            'body'   => 'required',
+            'photo'  => 'required|string'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors()->toArray(), 422);
+        }
+
+        $article = Article::create($validator->validate());
+
+        return $article;
     }
 
     /**
@@ -46,18 +49,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Article $article)
-    {
-        //
+        return $article;
     }
 
     /**
@@ -69,7 +61,20 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'author' => 'sometimes|string',
+            'body'   => 'sometimes',
+            'photo'  => 'sometimes|string'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors()->toArray(), 422);
+        }
+
+        $article->update($validator->validate());
+
+        return $article;
+
     }
 
     /**
@@ -80,6 +85,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        return response(['success' => true]);
     }
 }
