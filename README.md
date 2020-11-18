@@ -1,6 +1,6 @@
 # Laravel 8 CRUD
 Ejemplo básico de CRUD API Rest con Laravel 8.x usando Resources, Route Binding, Route ApiResource.
-Al ser los requerimientos muy básicos y sin especificar las reglas de negocio, no cuenta con Autenticación y Autorización, 
+Al ser los requerimientos muy básicos y sin especificar las reglas de negocio, no cuenta con Autenticación y Autorización, como buena práctica en vez de exponer id consecutivo en los endpoints de la API se debe utilizar uuid
 Cuenta únicamente con los modelos Article y Comments, también Test para CRUD
 En la rama DDD se hace la refactorización a Domain-Driven Design como un ejemplo para proyectos escalables
 
