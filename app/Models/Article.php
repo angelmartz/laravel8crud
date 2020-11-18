@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'author',
+        'body',
+        'photo',
+    ];
 }
