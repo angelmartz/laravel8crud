@@ -23,7 +23,7 @@ class ArticleFactory extends Factory
     {
         return [
             'author' => $this->faker->name,
-            'body'   => $this->faker->paragraphs(5),
+            'body'   => $this->faker->paragraphs(5, true),
             'photo'  => $this->faker->image('storage/app/public', 700, 700, 'article', true)
         ];
     }
