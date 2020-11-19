@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Crud\App\Api\Article\Controllers;
 
-use App\Http\Resources\ArticleCollection;
-use App\Http\Resources\ArticleResource;
+use App\Http\Controllers\Controller;
+use Crud\App\Api\Article\Resources\ArticleCollection;
+use Crud\App\Api\Article\Resources\ArticleResource;
 use Crud\Domain\Article\Models\Article;
 use Illuminate\Http\Request;
 use Validator;
