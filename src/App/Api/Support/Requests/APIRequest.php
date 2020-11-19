@@ -3,9 +3,8 @@
 
 namespace Crud\App\Api\Support\Requests;
 
-
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 abstract class APIRequest extends FormRequest
@@ -19,6 +18,8 @@ abstract class APIRequest extends FormRequest
         return true;
     }
 
+    abstract public function rules();
+
     /**
      * If validator fails return the exception in json form
      * @param Validator $validator
@@ -28,6 +29,4 @@ abstract class APIRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
-
-    abstract public function rules();
 }
