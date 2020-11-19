@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
-use Illuminate\Http\Request;
-use App\Http\Resources\ArticleResource;
 use App\Http\Resources\ArticleCollection;
+use App\Http\Resources\ArticleResource;
+use Crud\Domain\Article\Models\Article;
+use Illuminate\Http\Request;
 use Validator;
 
 class ArticleController extends Controller
@@ -46,7 +46,7 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \Crud\Domain\Article\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function show(Article $article)
@@ -58,7 +58,7 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Article  $article
+     * @param  \Crud\Domain\Article\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Article $article)
@@ -82,7 +82,7 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \Crud\Domain\Article\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article)

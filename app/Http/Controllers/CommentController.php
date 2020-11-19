@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
-use App\Models\Article;
-use App\Http\Resources\CommentResource;
 use App\Http\Resources\CommentCollection;
+use App\Http\Resources\CommentResource;
+use App\Models\Comment;
+use Crud\Domain\Article\Models\Article;
 use Illuminate\Http\Request;
 use Validator;
 

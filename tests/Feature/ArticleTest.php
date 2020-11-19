@@ -2,17 +2,17 @@
 
 namespace Tests\Feature;
 
+use Crud\Domain\Article\Models\Article;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\Article;
 
 class ArticleTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
     public function test_can_create_article() {
-        
+
         $article = Article::factory()->make();
 
         $response = $this->post(route('articles.store'), [
@@ -69,36 +69,36 @@ class ArticleTest extends TestCase
         ]);
     }
 
-    public function test_can_update_an_article()  
-    {  
-        $article = Article::factory()->create();  
+    public function test_can_update_an_article()
+    {
+        $article = Article::factory()->create();
 
-        $response = $this->patch(route('articles.update', $article->id), [  
+        $response = $this->patch(route('articles.update', $article->id), [
             'author' => $author =  $this->faker->name,
             'body' => $body = $this->faker->paragraphs(2, true),
-            'photo' => $photo = $this->faker->image('storage/app/public', 700, 700, 'article', true)  
-        ]);  
+            'photo' => $photo = $this->faker->image('storage/app/public', 700, 700, 'article', true)
+        ]);
 
-        $response->assertSuccessful();  
+        $response->assertSuccessful();
 
-        $this->assertDatabaseHas('articles', [  
+        $this->assertDatabaseHas('articles', [
             'id' => $article->id,
             'author' => $author,
             'body' => $body,
             'photo' => $photo
-        ]);  
+        ]);
     }
 
-    public function test_can_delete_an_article()  
-    {  
-        $article = Article::factory()->create();  
-        
-        $response = $this->delete(route('articles.destroy', $article->id));  
-        
-        $response->assertSuccessful();  
-        
-        $this->assertDeleted('articles', [  
-            'id' => $article->id,  
-        ]);  
+    public function test_can_delete_an_article()
+    {
+        $article = Article::factory()->create();
+
+        $response = $this->delete(route('articles.destroy', $article->id));
+
+        $response->assertSuccessful();
+
+        $this->assertDeleted('articles', [
+            'id' => $article->id,
+        ]);
     }
 }

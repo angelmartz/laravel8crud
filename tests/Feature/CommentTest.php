@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Comment;
+use Crud\Domain\Article\Models\Article;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use App\Models\Comment;
-use App\Models\Article;
 use Tests\TestCase;
 
 class CommentTest extends TestCase
@@ -13,7 +13,7 @@ class CommentTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     public function test_can_create_a_comment() {
-        
+
         $article = Article::factory()->create();
         $comment = Comment::factory()->make();
 
@@ -78,19 +78,19 @@ class CommentTest extends TestCase
         ]);
     }
 
-    public function test_can_update_an_article()  
-    {  
-        $article = Article::factory()->create();  
+    public function test_can_update_an_article()
+    {
+        $article = Article::factory()->create();
         $comment = $article->comments()->save(Comment::factory()->make());
 
-        $response = $this->patch(route('articles.comments.update', [$article->id, $comment->id]), [  
+        $response = $this->patch(route('articles.comments.update', [$article->id, $comment->id]), [
             'author' => $author =  $this->faker->name,
-            'text' => $text = $this->faker->text, 
-        ]);  
+            'text' => $text = $this->faker->text,
+        ]);
 
-        $response->assertSuccessful();  
+        $response->assertSuccessful();
 
-        $this->assertDatabaseHas('comments', [  
+        $this->assertDatabaseHas('comments', [
             'id' => $comment->id,
             'article_id' => $article->id,
             'author' => $author,
@@ -98,17 +98,17 @@ class CommentTest extends TestCase
         ]);
     }
 
-    public function test_can_delete_an_comment()  
-    {  
+    public function test_can_delete_an_comment()
+    {
         $article = Article::factory()->create();
-        $comment = $article->comments()->save(Comment::factory()->make()); 
-        
-        $response = $this->delete(route('articles.comments.destroy', [$article->id, $comment->id]));  
-        
-        $response->assertSuccessful();  
-        
-        $this->assertDeleted('comments', [  
-            'id' => $comment->id,  
-        ]);  
+        $comment = $article->comments()->save(Comment::factory()->make());
+
+        $response = $this->delete(route('articles.comments.destroy', [$article->id, $comment->id]));
+
+        $response->assertSuccessful();
+
+        $this->assertDeleted('comments', [
+            'id' => $comment->id,
+        ]);
     }
 }
