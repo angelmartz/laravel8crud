@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CommentCollection;
 use App\Http\Resources\CommentResource;
-use App\Models\Comment;
 use Crud\Domain\Article\Models\Article;
+use Crud\Domain\Comment\Models\Comment;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -46,7 +46,7 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \Crud\Domain\Comment\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function show(Article $article, Comment $comment)
@@ -74,7 +74,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \Crud\Domain\Comment\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article, Comment $comment)

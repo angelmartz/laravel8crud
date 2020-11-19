@@ -2,7 +2,7 @@
 
 namespace Crud\Domain\Article\Models;
 
-use App\Models\Comment;
+use Crud\Domain\Comment\Models\Comment;
 use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

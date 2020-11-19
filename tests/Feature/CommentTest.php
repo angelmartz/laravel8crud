@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\Comment;
 use Crud\Domain\Article\Models\Article;
+use Crud\Domain\Comment\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;

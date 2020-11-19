@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace Crud\Domain\Comment\Models;
 
 use Crud\Domain\Article\Models\Article;
+use Database\Factories\CommentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,5 +19,10 @@ class Comment extends Model
     public function article()
     {
         return $this->belongsTo(Article::class);
+    }
+
+    protected static function newFactory()
+    {
+        return CommentFactory::new();
     }
 }
