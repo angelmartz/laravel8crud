@@ -3,6 +3,9 @@
 namespace Crud\App\Api\Article\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArticleRequest;
+use Crud\App\Api\Article\Requests\CreateArticleRequest;
+use Crud\App\Api\Article\Requests\UpdateArticleRequest;
 use Crud\App\Api\Article\Resources\ArticleCollection;
 use Crud\App\Api\Article\Resources\ArticleResource;
 use Crud\Domain\Article\Models\Article;
@@ -18,7 +21,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return new ArticleCollection(Article::all());
+        return response()->json(new ArticleCollection(Article::all()));
     }
 
     /**
@@ -27,21 +30,11 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateArticleRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'author' => 'required|string',
-            'body'   => 'required',
-            'photo'  => 'required|string'
-        ]);
+        $article = Article::create($request->validated());
 
-        if($validator->fails()) {
-            return response()->json($validator->errors()->toArray(), 422);
-        }
-
-        $article = Article::create($validator->validate());
-
-        return new ArticleResource($article);
+        return response()->json(new ArticleResource($article));
     }
 
     /**
@@ -52,7 +45,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return new ArticleResource($article);
+        return response()->json(new ArticleResource($article));
     }
 
     /**
@@ -62,21 +55,11 @@ class ArticleController extends Controller
      * @param  \Crud\Domain\Article\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
-        $validator = Validator::make($request->all(), [
-            'author' => 'sometimes|string',
-            'body'   => 'sometimes',
-            'photo'  => 'sometimes|string'
-        ]);
+        $article->update($request->validated());
 
-        if($validator->fails()) {
-            return response()->json($validator->errors()->toArray(), 422);
-        }
-
-        $article->update($validator->validate());
-
-        return new ArticleResource($article);
+        return response()->json(new ArticleResource($article));
 
     }
 
@@ -90,6 +73,6 @@ class ArticleController extends Controller
     {
         $article->delete();
 
-        return response(['success' => true]);
+        return response()->json(['success' => true]);
     }
 }
