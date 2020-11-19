@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\CommentController;
 use Crud\App\Api\Article\Controllers\ArticleController;
+use Crud\App\Api\Comment\Controllers\CommentController;
 use Crud\Domain\Comment\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Crud\App\Api\Comment\Controllers;
 
-use App\Http\Resources\CommentCollection;
-use App\Http\Resources\CommentResource;
+use App\Http\Controllers\Controller;
+use Crud\App\Api\Comment\Resources\CommentCollection;
+use Crud\App\Api\Comment\Resources\CommentResource;
 use Crud\Domain\Article\Models\Article;
 use Crud\Domain\Comment\Models\Comment;
 use Illuminate\Http\Request;
