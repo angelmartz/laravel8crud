@@ -13,4 +13,5 @@ deployment:
     - /bin/cp -R composer.lock $DEPLOYPATH
     - /bin/cp -R package.json $DEPLOYPATH
     - cd $DEPLOYPATH
+    - /usr/local/bin/php artisan --version
     - composer update --no-interaction --prefer-dist --optimize-autoloader
