@@ -12,9 +12,5 @@ deployment:
     - /bin/cp -R composer.json $DEPLOYPATH
     - /bin/cp -R composer.lock $DEPLOYPATH
     - /bin/cp -R package.json $DEPLOYPATH
-    - /bin/cp -R readme.md $DEPLOYPATH
-    - /bin/cp -R phpunit.xml $DEPLOYPATH
-    - /bin/cp -R server.php $DEPLOYPATH
-    - /bin/cp -R webpack.mix.js $DEPLOYPATH
     - cd $DEPLOYPATH
     - composer update --no-interaction --prefer-dist --optimize-autoloader
